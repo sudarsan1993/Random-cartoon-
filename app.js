@@ -7,16 +7,15 @@ const para = document.querySelector("p");
 
 btn.addEventListener("click", random);
 
-function random() {
+async function random() {
   container.style.display = "block";
-  fetch("https://finalspaceapi.com/api/v0/character")
-    .then((res) => res.json())
-    .then((data) => {
-      const num = Math.ceil(Math.random() * 40);
-      head.textContent = `${data[num].name}`;
-      para.textContent = `${data[num].abilities}`;
-      container.innerHTML = `
-    <img src="${data[num].img_url}">`;
-      console.log(data);
-    });
+
+  const cartoons = await fetch("https://finalspaceapi.com/api/v0/character");
+  const character = await cartoons.json();
+
+  const num = Math.ceil(Math.random() * 40);
+  head.textContent = `${character[num].name}`;
+  para.textContent = `${character[num].abilities}`;
+  container.innerHTML = `
+    <img src="${character[num].img_url}">`;
 }
